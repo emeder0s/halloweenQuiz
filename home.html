@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Halloween Quiz</h1>
+    <div id="formulario">
+        <label for="nombreUsuario">Player</label>
+        <input id="nombreUsuario" type="text"></input>
+        <button onclick="registrarUsuario()">Empezar</button>
+    </div>
+    <div id="bienvenida">
+        <h2>Bienvenido, nombredeUsuario</h2>
+        <h3>¿A qué quieres jugar?</h3>
+        <select id="categorias">
+            <option value="https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple">Todas las categorías</option>
+            <option value="https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple">Culturita general</option>
+            <option value="https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple">Películas</option>
+            <option value="https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple">libros</option>
+            <option value="https://opentdb.com/api.php?amount=10&category=14&difficulty=easy&type=multiple">Televisión</option>
+            <option value="https://opentdb.com/api.php?amount=10&category=16&difficulty=easy&type=multiple" >Juegos de mesa</option>
+        </select>
+        <button onclick="jugar()">Jugar</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
