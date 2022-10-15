@@ -82,8 +82,9 @@ body {
 #intro h2 {
     font-size: 50px;
     margin: 0;
+    margin-right: 10px;
     line-height: 4px;
-    /* text-align: center; */
+    text-align: right;
 }
 
 #formulario {
