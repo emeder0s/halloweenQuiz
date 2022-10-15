@@ -16,14 +16,12 @@ function registrarUsuario() {
 }
 function jugar() {
     var pregunta = document.getElementById('categorias').value;
-    //fetch('https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple')
-    fetch(pregunta)
+        fetch(pregunta)
         .then(res => res.json())
         .then(datos => {
             cargaPreguntas(datos); 
             window.location = "question.html";
         })
-        pintaPregunta('0');
 }
 function sube(clave, valor) {
     localStorage.setItem(clave, valor);
