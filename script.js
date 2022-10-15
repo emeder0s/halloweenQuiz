@@ -46,6 +46,7 @@ function efectosCSSIntro(){
         bienvenida.style.display="block";
         bienvenida.classList.add('show');
     }, 200);
+}
 
 function jugar() {
     var pregunta = document.getElementById('categorias').value;
