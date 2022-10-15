@@ -52,6 +52,7 @@ body {
     border: 1px solid #16191f;
     border-radius: 27px;
     box-shadow: 1px 1px 12px #16191f;
+    background: #383e4e;
 }
 
 .flex-center-column {
@@ -150,6 +151,13 @@ p#copyright-txt{
 
 #bienvenida h2 {
     font-size: 60px;
+    font-family: 'Creepster', cursive;
+    color: rgb(173, 193, 101);
+}
+
+#bienvenida h2 span#nombre{
+    font-family: 'Creepster', cursive;
+    text-shadow: 1px 1px 5px;
     color: rgb(173, 193, 101);
 }
 
@@ -179,6 +187,14 @@ button#jugar {
 span#bienvenido {
     color:#e87425;
     text-shadow: 2px 3px lemonchiffon;
+}
+
+#spider-web-left{
+    position: fixed;
+    left: 0;
+    z-index: -1;
+    width: 55%;
+    opacity: 0.1;
 }
     
 header {
