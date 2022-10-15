@@ -74,17 +74,18 @@ function addUsuario(nombreUsuario){
 }
 
 function registrarUsuario(){
-    var nombreUsuario = document.getElementById("nombreUsuario").value;
+    //var nombreUsuario = document.getElementById("nombreUsuario").value;
+    var nombreUsuario ="emederos";
     if(nombreUsuario) {
+        var cabecera = document.getElementById("cabecera2-bienvenida");
         efectosCSSIntro();
-        var cabecera = document.getElementById("cabecera-bienvenida");
         if (!existeUsuario(nombreUsuario)){
             addUsuario(nombreUsuario);
-            var mensaje = document.createTextNode(`Bienvenido, ${nombreUsuario}`);
+            var mensaje = `Bienvenid<img src="images/pumpkin_scalated50.png">, ${nombreUsuario}`;
         }else{
-            var mensaje = document.createTextNode(`Bienvenido de nuevo, ${nombreUsuario}`);
+            var mensaje = `Bienvenid<img src="images/pumpkin_scalated50.png"> de nuevo, ${nombreUsuario}`;
         }
-        cabecera.appendChild(mensaje);
+        cabecera.innerHTML=mensaje;
         localStorage.setItem("usuariorActual", nombreUsuario);
     }else{
         var mensaje = document.createTextNode("El nombre de usuario no puede estar vacío");
@@ -94,10 +95,15 @@ function registrarUsuario(){
     }
 }
 
+function getURL(){
+
+}
+
 function comprobarRespuesta(respuesta){
 
 }
 
 function jugar(){
-
+ var categorias = document.getElementById("categorias");
+ console.log(categorias);
 }
