@@ -1,33 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../images/favicon-96x96.png">
 </head>
+
 <body>
+    <header>
+        <img src="../images/ghost (1).png" id="ghost">
+        <h3>User:</h3>
+        <h3>Score: 0</h3>
+    </header>
     <h2>Halloween Quiz</h2>
     <img src="../images/pumpkin.png" class="img-pregunta">
     <div id="preguntas">
         <h4>Pregunta</h4>
-        <button class = "respuesta" id="res0" onclick="comprobarRespuesta('0')">respuesta 1</button>
-        <button class = "respuesta" id="res1"  onclick="comprobarRespuesta('1')">respuesta 2</button>
-        <button class = "respuesta" id="res2"  onclick="comprobarRespuesta('2')">respuesta 3</button>
-        <button class = "respuesta" id="res3"  onclick="comprobarRespuesta('3')">respuesta 4</button>
+        <button class="respuesta" id="res0" onclick="comprobarRespuesta('0')">respuesta 1</button>
+        <button class="respuesta" id="res1" onclick="comprobarRespuesta('1')">respuesta 2</button>
+        <button class="respuesta" id="res2" onclick="comprobarRespuesta('2')">respuesta 3</button>
+        <button class="respuesta" id="res3" onclick="comprobarRespuesta('3')">respuesta 4</button>
     </div>
-    <img src="../images/ghost (1).png" id="ghost">
-    <img src="../images/spider-web.png" id="spìder">
+    <img src="../images/spider-web.png" id="spider">
+    <img src="../images/thunder.png"  id="thunder1">
+    <img src="../images/thunder.png"  id="thunder2">
     <audio>
-        <source src="../sounds/VOXLaff_Laugh (ID 0475)_BSB.wav"></source>           
+        <source src="../sounds/VOXLaff_Laugh (ID 0475)_BSB.wav">
+        </source>
     </audio>
     <audio>
-        <source src="../sounds/VOXScrm_Howling of a girl 1 (ID 1662)_BSB.wav"></source>
+        <source src="../sounds/VOXScrm_Howling of a girl 1 (ID 1662)_BSB.wav">
+        </source>
     </audio>
+    <audio>
+        <source src="../sounds/thunder-sound.wav">
+        </source>
+    </audio>
+    <div id="mensajes">
+        <h4>¡Final!</h4>
+    </div>
     <script src="script.js"></script>
 </body>
+
 </html>
