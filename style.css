@@ -30,7 +30,7 @@ header h3 {
 .img-pregunta {
     width: 80px;
     position: absolute;
-    top: 210px;
+    top: 190px;
     left: 70%;
     transform: rotate(10deg);
     animation: calabaza 1s linear;

@@ -16,10 +16,10 @@ function registrarUsuario() {
 }
 function jugar() {
     var pregunta = document.getElementById('categorias').value;
-        fetch(pregunta)
+    fetch(pregunta)
         .then(res => res.json())
         .then(datos => {
-            cargaPreguntas(datos); 
+            cargaPreguntas(datos);
             window.location = "question.html";
         })
 }
@@ -42,6 +42,7 @@ function cargaPreguntas(datos) {
         sube(`resIncorrecta${i}`, JSON.stringify(resIncorrecta));
         sube('numPregunta', 0);
         sube('score', 0);
+        //Falta poner el nombre de usuario---
     }
 }
 
@@ -67,9 +68,7 @@ function rayos() {
 
 function pintaPregunta(numPregunta) {
     numPregunta = parseInt(numPregunta);
-    console.log("Entra y es pregunta " + numPregunta);
-    if (numPregunta<=9 || numPregunta==0) {
-        console.log("Entra2  y es pregunta " + numPregunta);
+    if (numPregunta <= 9 || numPregunta == 0) {
         var pregunta = baja(`Pregunta${(numPregunta)}`);
         var numMensaje = (numPregunta + 1);
         mensajes(`Pregunta ${(numMensaje)}`);
@@ -90,14 +89,15 @@ function pintaPregunta(numPregunta) {
             }
         }
         document.querySelectorAll('h3')[1].innerText = "Score: " + baja('score');
+        document.querySelectorAll('h3')[0].innerText = "Player: " + baja('usuarioActual');
         sube('numPregunta', (numPregunta + 1));
         sube('correcta', correcta);
     } else {
-             mensajes('¡Final!');
-            rayos();
-            setTimeout(function () {
-                window.location = "results.html";
-            }, 7000);
+        mensajes('¡Final!');
+        rayos();
+        setTimeout(function () {
+            window.location = "results.html";
+        }, 7000);
     }
 }
 
