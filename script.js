@@ -74,8 +74,8 @@ function addUsuario(nombreUsuario){
 }
 
 function registrarUsuario(){
-    //var nombreUsuario = document.getElementById("nombreUsuario").value;
-    var nombreUsuario ="emederos";
+    var nombreUsuario = document.getElementById("nombreUsuario").value;
+    //var nombreUsuario ="emederos";
     if(nombreUsuario) {
         var cabecera = document.getElementById("cabecera2-bienvenida");
         efectosCSSIntro();
@@ -86,7 +86,7 @@ function registrarUsuario(){
             var mensaje = `Bienvenid<img src="images/pumpkin_scalated50.png"> de nuevo, ${nombreUsuario}`;
         }
         cabecera.innerHTML=mensaje;
-        localStorage.setItem("usuariorActual", nombreUsuario);
+        localStorage.setItem("usuarioActual", nombreUsuario);
     }else{
         var mensaje = document.createTextNode("El nombre de usuario no puede estar vacío");
         var parrafo = document.getElementById("mensaje");
@@ -95,15 +95,3 @@ function registrarUsuario(){
     }
 }
 
-function getURL(){
-
-}
-
-function comprobarRespuesta(respuesta){
-
-}
-
-function jugar(){
- var categorias = document.getElementById("categorias");
- console.log(categorias);
-}
