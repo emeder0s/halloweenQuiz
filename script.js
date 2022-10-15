@@ -17,6 +17,8 @@ function efectosCSSIntro(){
     var container = document.getElementById("container");
     var bienvenida = document.getElementById("bienvenida");
     container.appendChild(bienvenida);
+    // document.getElementById("spider-web-right").style.display="";
+    // document.getElementById("spider-web-left").style.display="";
     setTimeout(function(){
         document.getElementById("intro").style.display="none";
     }, 150);
@@ -180,9 +182,12 @@ function registrarUsuario(){
         efectosCSSIntro();
         if (!existeUsuario(nombreUsuario)){
             addUsuario(nombreUsuario);
-            var mensaje = `Bienvenid<img src="images/pumpkin_scalated50.png">, ${nombreUsuario}`;
+            var mensaje = `Bienvenid@, <span id="nombre">${nombreUsuario}</span>`;
+            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png">, ${nombreUsuario}`;
+
         }else{
-            var mensaje = `Bienvenid<img src="images/pumpkin_scalated50.png"> de nuevo, ${nombreUsuario}`;
+            var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
+            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png"> de nuevo, ${nombreUsuario}`;
         }
         cabecera.innerHTML=mensaje;
         localStorage.setItem("usuarioActual", nombreUsuario);
