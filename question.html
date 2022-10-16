@@ -19,7 +19,7 @@
         <h3>Player:</h3>
         <h3>Score: 0</h3>
     </header>
-    <h2>Halloween Quiz</h2>
+    <h2 id="cabecera-preguntas"><span class="smoke">Halloween</span> Quiz</h2>
     <img src="../images/pumpkin.png" class="img-pregunta">
     <div id="preguntas">
         <h4>Pregunta</h4>
@@ -46,6 +46,12 @@
     <div id="mensajes">
         <h4>¡Final!</h4>
     </div>
+    <svg width="0">
+        <filter id="filter">
+          <feTurbulence id="turbulence" type="fractalNoise" baseFrequency=".03" numOctaves="20" />
+          <feDisplacementMap in="SourceGraphic" scale="30" />
+        </filter>
+      </svg>
     <script src="script.js"></script>
 </body>
 
