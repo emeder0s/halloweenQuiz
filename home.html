@@ -4,34 +4,82 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Halloween Quiz</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/x-icon" href="../images/favicon-96x96.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="intro">
-        <h1>Halloween Quiz</h1>
-        <div id="formulario">
-            <label for="nombreUsuario">Player</label>
-            <input id="nombreUsuario" type="text"></input>
-            <button onclick="registrarUsuario()">Empezar</button>
+    <div class="space70"></div>
+    <div id="container" class="container show">
+        <div id="intro" class="flex-center-column">
+            <h1><span class="smoke">Hall</span><img src="images/pumpkin_scalated.png"><span class="smoke">ween</span></h1>
+            <h2>Quiz</h2>
+            <div id="formulario" class="flex-center-column ">
+                <div  class="flex-center-column">
+                    <label for="nombreUsuario">Player</label>
+                    <input id="nombreUsuario" type="text" required></input>
+                    <p id="mensaje" style="display:none"></p>
+                </div>
+                <button id="empezar" onclick="registrarUsuario()">START</button>
+            </div>
+            <p id="copyright-txt">Copyright &#169 2022 - Authors: Jorge Coronilla y Elena Mederos</p>
         </div>
     </div>
-    <div id="bienvenida">
-        <h2>Bienvenido, nombredeUsuario</h2>
-        <h3>¿A qué quieres jugar?</h3>
-        <select id="categorias">
-            <option value="https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple">Todas las categorías</option>
-            <option value="https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple">Culturita general</option>
-            <option value="https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple">Películas</option>
-            <option value="https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple">libros</option>
-            <option value="https://opentdb.com/api.php?amount=10&category=14&difficulty=easy&type=multiple">Televisión</option>
-            <option value="https://opentdb.com/api.php?amount=10&category=16&difficulty=easy&type=multiple" >Juegos de mesa</option>
-        </select>
-        <button onclick="jugar()">Jugar</button>
-    </div>
+        <div id="bienvenida" class="flex-center-columnn" style="display:none">
+            <div class="flex-center-center-column">
+                <h2 id="cabecera2-bienvenida"></h2>
+                <h3 id="cabecera3-bienvenida"> ¿A qué quieres jugar?</h3>
+                <select id="categorias">
+                    <option value="https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple">Todas las categorías</option>
+                    <option value="https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple">Culturita General</option>
+                    <option value="https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple">Películas</option>
+                    <option value="https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple">Libros</option>
+                    <option value="https://opentdb.com/api.php?amount=10&category=14&difficulty=easy&type=multiple">Televisión</option>
+                    <option value="https://opentdb.com/api.php?amount=10&category=16&difficulty=easy&type=multiple" >Juegos de mesa</option>
+                </select>
+                <button id="jugar" onclick="jugar()">PLAY</button>
+            </div>  
+        </div>
+    <img id="spider-web-left" src="images/spider-web.png">
+    <!-- Contenedor que define un nuevo sistema de coordenadas y viewport (en-US). Es necesario para crear el efecto smoke de la cabecera -->
+    <svg width="0">
+        <filter id="filter">
+          <feTurbulence id="turbulence" type="fractalNoise" baseFrequency=".03" numOctaves="20" />
+          <feDisplacementMap in="SourceGraphic" scale="30" />
+        </filter>
+      </svg>
     <script src="script.js"></script>
+    <script>
+        //CÓDIGO PARA CREAR EL EFECTO SMOKE
+        const filter = document.querySelector("#turbulence");
+        let frames = 1;
+        let rad = Math.PI / 180;
+        let bfx, bfy;
+
+        function freqAnimation() {
+            frames += .2;
+            bfx = 0.03;
+            bfy = 0.03;
+
+            bfx += 0.005 * Math.cos(frames * rad);
+            bfy += 0.005 * Math.sin(frames * rad);
+
+            bf = `${String(bfx)} ${String(bfy)}`;
+            filter.setAttributeNS(null, "baseFrequency", bf);
+
+            requestAnimationFrame(freqAnimation);
+        }
+
+        requestAnimationFrame(freqAnimation);
+    </script>
 </body>
 </html>

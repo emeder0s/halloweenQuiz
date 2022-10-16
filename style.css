@@ -1,9 +1,351 @@
+/* background-color: #383E4E
+color naranja: #FF7200
+botones: #262A35 */
+/* -------------- EFECTOS Y ANIMACIONES --------------- */
+.smoke {
+    filter: url('#filter');
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+.show{
+    animation: fadein 3s;
+}
+
+.hint{
+    /* transform: translateY(500px); */
+    /* opacity: 0;
+    transition: opacity 1s;*/
+    animation: fadeout 3s;
+} 
+
+/* -------------- INTRO Y BIENVENIDA --------------- */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #383E4E;
     color: white;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
+    align-content: center;
     flex-direction: column;
+}
+
+.space70 {
+    height: 70px;
+}
+
+.space20 {
+    height: 20px;
+}
+
+.container {
+    padding: 30px;
+    border: 1px solid #16191f;
+    border-radius: 27px;
+    box-shadow: 1px 1px 12px #16191f;
+    background: #383e4e;
+}
+
+.flex-center-column {
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    margin: 0;
+}
+
+.flex-center-center-column {
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+.flex-center-row {
+    display:flex;
+    justify-content:center;
+    align-content: center;
+    flex-direction: row;
+    margin: 0;
+}
+
+
+#intro h1 {
+    font-size: 120px;
+    color:#e87425;
+    text-shadow: 2px 3px lemonchiffon;
+    margin: 0;
+    text-align: center;
+}
+
+#intro h2 {
+    font-size: 50px;
+    margin: 0;
+    margin-right: 10px;
+    line-height: 4px;
+    text-align: right;
+}
+
+#formulario {
+    margin: 90px 0px;
+}
+
+button {
+    background: rgba(0, 0, 0, 0.6);
+    color:white;
+    border:none;
+    padding: 5px 7px;
+    cursor: pointer;
+    margin: 20px 0px;
+    font-size: 150%;
+}
+
+button:hover {
+    background-color:#262A35;
+}
+
+input {
+    display: block;
+    height: 35px;
+    padding: 10px 15px;
+    font-size: 15px;
+    line-height: 1.42857143;
+    color: #464545;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+}
+
+label {
+    font-size: 189%;
+    line-height: 39px;
+}
+
+p#copyright-txt{
+    text-align: center;
+    font-size: x-small;
+    margin: 0px;
+    color: #adc165;
+}
+
+#mensaje {
+    text-align: center;
+    color: rgb(173, 193, 101);
+}
+
+#bienvenida div, h3{
+    margin:0;
+}
+
+#bienvenida h2 {
+    font-size: 60px;
+    font-family: 'Creepster', cursive;
+    color: rgb(173, 193, 101);
+}
+
+#bienvenida h2 span#nombre{
+    font-family: 'Creepster', cursive;
+    text-shadow: 1px 1px 5px;
+    color: rgb(173, 193, 101);
+}
+
+#bienvenida h3 {
+    font-size: 30px;
+}
+
+#bienvenida select {
+    display: block;
+    height: 40px;
+    padding: 10px 15px;
+    font-size: 15px;
+    line-height: 1.42857143;
+    color: #464545;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 35px;
+}
+
+button#jugar {
+    width: 100%;
+}
+
+span#bienvenido {
+    color:#e87425;
+    text-shadow: 2px 3px lemonchiffon;
+}
+
+#spider-web-left{
+    position: fixed;
+    left: 0;
+    z-index: -1;
+    width: 55%;
+    opacity: 0.1;
+}
+    
+header {
+    background-color: hsl(224, 18%, 16%, 0.5);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+
+header h3 {
+    font-size: 30px;
+    margin: 10px 20% 10px 0;
+}
+
+#ghost {
+    width: 50px;
+    margin-left: 20%;
+    margin-right: 10px;
+}
+
+.img-pregunta {
+    width: 80px;
+    position: absolute;
+    top: 190px;
+    left: 70%;
+    transform: rotate(10deg);
+    animation: calabaza 1s linear;
+    z-index: 2;
+}
+
+@keyframes calabaza {
+    10% {
+        rotate:rotate(70deg)
+    }
+
+    100% {
+        transform: rotate(370deg);
+    }
+}
+
+#preguntas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 100px auto auto auto;
+    background-color: #26282c;
+    border-radius: 15px;
+    width: 500px;
+    padding: 20px 5% 30px 5%;
+    align-items: center;
+    box-shadow: rgb(46, 48, 51) 0px 20px 30px -10px;
+    animation: calabaza 1s linear;
+}
+
+@keyframes preguntas {
+
+    100% {
+        transform: rotate(370deg);
+    }
+}
+
+#preguntas h4 {
+    font-size: 25px;
+    line-height: 1.5;
+    text-align: center;
+    transition-duration: 2s;
+}
+
+#preguntas button {
+    display: block;
+    border: 2px solid #FF7200;
+    border-radius: 15px;
+    font-size: 20px;
+    width: 350px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #383E4E;
+    color: aliceblue;
+    transition-duration: 0.5s;
+    box-shadow: 0px 8px 15px rgba(255, 255, 255, 0.3);
+}
+
+#preguntas:hover {
+    background-color: #2a2c30;
+}
+
+#preguntas button:hover {
+    border: 2px solid #6d4bc9;
+    background-color: #ff6a00;
+    padding: 12px;
+    font-size: 23px;
+}
+
+#spider {
+    width: 150px;
+    margin-right: 80%;
+    position: relative;
+    bottom: 50px;
+    z-index: -1;
+}
+
+#mensajes {
+    position: absolute;
+    top: 400px;
+    font-size: 100px;
+    background-color: #8c00ff8e;
+    height: 140px;
+    padding: 30px;
+    visibility: hidden;
+
+}
+
+#mensajes h4 {
+    margin: 0;
+}
+
+#thunder1 {
+    position: absolute;
+    top: 300px;
+    height: 200px;
+    width: 100px;
+    transform: rotate(-20deg);
+    right: 70%;
+    animation: blinker 1s linear infinite;
+    visibility: hidden;
+    z-index: 3;
+}
+
+#thunder2 {
+    position: absolute;
+    left: 70%;
+    top: 400px;
+    height: 300px;
+    width: 130px;
+    transform: rotate(10deg);
+    animation: blinker 1s linear infinite;
+    visibility: hidden;
+    z-index: 3;
+}
+
+@keyframes blinker {
+    25% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
 }
