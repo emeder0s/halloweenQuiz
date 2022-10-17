@@ -1,15 +1,17 @@
 //INICIALIZACION DE PRUEBA
 var usuario = {
     "nombreUsuario": "emederos",
-    "partidas": [ 10, 5 ]
+    "partidas": [10, 5]
 }
 
 var usuario2 = {
     "nombreUsuario": "jcoronilla",
-    "partidas": [ 10, 5 ]
+    "partidas": [10, 5]
 }
 var usuariosArray = [usuario2, usuario];
 localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
+sube('correcta', 5)
+var tiempo = 10;
 
 //CÓDIGO PARA CREAR EL EFECTO SMOKE
 const filter = document.querySelector("#turbulence");
@@ -144,7 +146,7 @@ function mensajes(mensaje) {
     document.getElementById('mensajes').style.visibility = "visible";
     setTimeout(function () {
         document.getElementById('mensajes').style.visibility = "hidden";
-    }, 3000);
+    }, 1500);
 }
 
 //EFECTO DE LOS RAYOS
@@ -162,8 +164,9 @@ function rayos() {
 
 //IMPRIME LAS PREGUNTAS Y RESPUESTAS
 function pintaPregunta(numPregunta) {
+    tiempo=10;
     numPregunta = parseInt(numPregunta);
-    if (numPregunta <= 9 || numPregunta == 0) {
+    if (numPregunta <= 9) {
         var pregunta = baja(`Pregunta${(numPregunta)}`);
         var numMensaje = (numPregunta + 1);
         mensajes(`Pregunta ${(numMensaje)}`);
@@ -187,8 +190,8 @@ function pintaPregunta(numPregunta) {
         document.querySelectorAll('h3')[0].innerText = "Player: " + baja('usuarioActual');
         sube('numPregunta', (numPregunta + 1));
         sube('correcta', correcta);
-
-        //EN CASO DE NO HABER MÁS PREGUNTAS ENLAA A RESULTS.HTML
+        reloj(10);
+        //EN CASO DE NO HABER MÁS PREGUNTAS ENLAZA A RESULTS.HTML
     } else {
         mensajes('¡Final!');
         rayos();
@@ -199,8 +202,26 @@ function pintaPregunta(numPregunta) {
     }
 }
 
+//Cuenta atrás
+function reloj() {
+    document.getElementById('muerte').style.visibility="visible";
+    tiempo--;
+    document.getElementById("reloj").innerHTML = String(tiempo);
+    if (tiempo > 0 && baja('correcta') < 5) {
+        setTimeout(reloj, 1000);
+        document.getElementsByTagName("audio")[4].play();
+    }
+    if (tiempo < 1 && baja('correcta') < 5) {
+        document.getElementsByTagName("audio")[3].play();
+        document.getElementById('muerte').style.visibility="hidden";
+        comprobarRespuesta(5);
+    }
+};
+
+
 //COMPRUEBA LA RESPUESTA DEL USUARIO
 function comprobarRespuesta(respuesta) {
+
     var correcta = baja('correcta');
     if (correcta == parseInt(respuesta)) {
         let score = parseInt(baja('score'));
@@ -209,6 +230,7 @@ function comprobarRespuesta(respuesta) {
     } else {
         incorrecto(respuesta);
     }
+    sube('correcta', 5)
 }
 
 //EFECTOS DE ACIERTOS Y ENLACE A SIGUIENTE PREGUNTA
@@ -226,8 +248,11 @@ function correcto(respuesta) {
 
 //EFECTOS DE ERROR Y ENLACE A SIGUIENTE PREGUNTA
 function incorrecto(respuesta) {
-    var id = `res${respuesta}`;
-    document.getElementById(id).style.backgroundColor = "#f50813";
+    if (respuesta<5) {
+        var id = `res${respuesta}`;
+        document.getElementById(id).style.backgroundColor = "#f50813";
+    } 
+   
     var grito = document.getElementsByTagName("audio")[1];
     grito.play();
     mensajes('¡Uy! Qué miedito');
@@ -246,10 +271,10 @@ function graficas() {
     document.querySelector('#mensajeFantasma p').innerText = "Score: " + baja('score');
     setTimeout(function () {
         document.getElementById('mensajeFantasma').style.visibility = "visible"
-    }, 3000);
+    }, 3500);
     setTimeout(function () {
         document.getElementById('mensajeFantasma').style.visibility = "hidden"
-    }, 7000);
+    }, 6000);
     var usuarios = JSON.parse(baja('usuarios'));
     console.log(usuarios)
     var labels = [], valores = [];
@@ -260,42 +285,42 @@ function graficas() {
         let avg = sum / usuarios[key].partidas.length;
         valores.push(avg)
     }
-   pintarGrafica(labels, valores);
+    pintarGrafica(labels, valores);
 }
 
 function cargarPartida() {
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
     for (key in usuarios) {
         if (usuarios[key].nombreUsuario == baja(usuarioActual)) {
-            usuarios[key].partidas.push(baja('score')) 
+            usuarios[key].partidas.push(baja('score'))
             localStorage.setItem("usuarios", JSON.stringify(usuarios));
         }
     }
 }
 
-function pintarGrafica (etiquetas, valores) {
-    
+function pintarGrafica(etiquetas, valores) {
 
-      const data = {
+
+    const data = {
         labels: etiquetas,
         datasets: [{
-          label: 'My First dataset',
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: valores,
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: valores,
         }]
-      };
-    
-      const config = {
+    };
+
+    const config = {
         type: 'bar',
         data: data,
         options: {}
-      };
+    };
 
-      const myChart = new Chart(
+    const myChart = new Chart(
         document.getElementById('myChart'),
         config
-      );
+    );
 }
 
 
