@@ -389,13 +389,29 @@ input, select, option {
     position: absolute;
     width: 60px;
     top:100px;
-    animation: ghost 5s linear;
-    left: 105%;
+    animation: ghost 7s linear;
+    left: 90%;
 }
 
 @keyframes ghost {
     5%{left: 85%}
     40%{left: 45%}
-    60%{left: 60%}
+    59%{left: 45%}
+    75%{left: 60%}
     100%{left: 10%}
+}
+
+#mensajeFantasma {
+    background-color: white;
+    border: 2px solid #FF7200;
+    width:300px;
+    height: 100px;
+    color: #6d4bc9;
+    margin-top: 150px;
+    visibility: hidden;
+}
+
+#mensajeFantasma p {
+    text-align: center;
+    font-size: 25px;
 }

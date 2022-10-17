@@ -1,12 +1,12 @@
 //INICIALIZACION DE PRUEBA
 var usuario = {
     "nombreUsuario": "emederos",
-    "partidas": { "Peliculas": "10", "TodasCategorías": "5" }
+    "partidas": [ 10, 5 ]
 }
 
 var usuario2 = {
     "nombreUsuario": "jcoronilla",
-    "partidas": { "Peliculas": "10", "TodasCategorías": "5" }
+    "partidas": [ 10, 5 ]
 }
 var usuariosArray = [usuario2, usuario];
 localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
@@ -68,7 +68,7 @@ function addUsuario(nombreUsuario) {
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
     var usuario = {
         "nombreUsuario": nombreUsuario,
-        "partidas": {}
+        "partidas": []
     }
     usuarios.push(usuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
@@ -192,6 +192,7 @@ function pintaPregunta(numPregunta) {
     } else {
         mensajes('¡Final!');
         rayos();
+        guardarPartida()
         setTimeout(function () {
             window.location = "results.html";
         }, 7000);
@@ -240,6 +241,64 @@ function incorrecto(respuesta) {
         pintaPregunta(numPregunta);
     }, 5000);
 }
+
+function graficas() {
+    document.querySelector('#mensajeFantasma p').innerText = "Score: " + baja('score');
+    setTimeout(function () {
+        document.getElementById('mensajeFantasma').style.visibility = "visible"
+    }, 3000);
+    setTimeout(function () {
+        document.getElementById('mensajeFantasma').style.visibility = "hidden"
+    }, 7000);
+    var usuarios = JSON.parse(baja('usuarios'));
+    console.log(usuarios)
+    var labels = [], valores = [];
+    for (key in usuarios) {
+        labels.push(usuarios[key].nombreUsuario);
+        console.log(usuarios[key])
+        let sum = usuarios[key].partidas.reduce((previous, current) => current += previous);
+        let avg = sum / usuarios[key].partidas.length;
+        valores.push(avg)
+    }
+   pintarGrafica(labels, valores);
+}
+
+function cargarPartida() {
+    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    for (key in usuarios) {
+        if (usuarios[key].nombreUsuario == baja(usuarioActual)) {
+            usuarios[key].partidas.push(baja('score')) 
+            localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        }
+    }
+}
+
+function pintarGrafica (etiquetas, valores) {
+    
+
+      const data = {
+        labels: etiquetas,
+        datasets: [{
+          label: 'My First dataset',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: valores,
+        }]
+      };
+    
+      const config = {
+        type: 'bar',
+        data: data,
+        options: {}
+      };
+
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+}
+
+
 
 
 
