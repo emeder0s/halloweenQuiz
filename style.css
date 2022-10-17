@@ -207,7 +207,8 @@ span#bienvenido {
     width: 55%;
     opacity: 0.1;
 }
-    
+
+/*MARCADOR*/
 header {
     background-color: hsl(224, 18%, 16%, 0.5);
     width: 100%;
@@ -227,12 +228,13 @@ header h3 {
     margin-right: 10px;
 }
 
+/*CAJA PREGUNTAS*/
 .img-pregunta {
     width: 80px;
     position: absolute;
-    top: 160px;
-    left: 68%;
-    transform: rotate(15deg);
+    top: 140px;
+    left: 70%;
+    transform: rotate(10deg);
     animation: calabaza 1s linear;
     z-index: 2;
 }
@@ -251,7 +253,8 @@ header h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 50px auto auto auto;
+    margin: 60px auto auto auto;
+
     background-color: #26282c;
     border-radius: 15px;
     width: 500px;
@@ -273,6 +276,7 @@ header h3 {
     line-height: 1.5;
     text-align: center;
     transition-duration: 2s;
+    margin-bottom: 10px;
 }
 
 #preguntas button {
@@ -301,16 +305,17 @@ header h3 {
 }
 
 #spider {
-    width: 150px;
+    width: 450px;
     margin-right: 80%;
     position: relative;
-    bottom: 50px;
+    bottom: 250px;
     z-index: -1;
 }
 
+/*MENSAJES*/
 #mensajes {
     position: absolute;
-    top: 400px;
+    top: 300px;
     font-size: 100px;
     background-color: #8c00ff8e;
     height: 140px;
@@ -323,13 +328,14 @@ header h3 {
     margin: 0;
 }
 
+/*EFECTOS RAYOS*/
 #thunder1 {
     position: absolute;
-    top: 300px;
-    height: 200px;
+    top: 210px;
+    height: 250px;
     width: 100px;
     transform: rotate(-20deg);
-    right: 70%;
+    right: 75%;
     animation: blinker 1s linear infinite;
     visibility: hidden;
     z-index: 3;
@@ -338,8 +344,8 @@ header h3 {
 #thunder2 {
     position: absolute;
     left: 70%;
-    top: 400px;
-    height: 300px;
+    top: 200px;
+    height: 350px;
     width: 130px;
     transform: rotate(10deg);
     animation: blinker 1s linear infinite;
@@ -359,4 +365,37 @@ header h3 {
     90% {
         opacity: 0;
     }
+}
+
+header+h2 {
+    font-size: 50px;
+    font-family: 'Creepster', cursive;
+    color: rgb(173, 193, 101);
+    margin: 0;
+}
+
+/*
+input, select, option {
+    border: 2px solid #FF7200;
+    border-radius: 15px;
+    font-size: 20px;
+    width:auto;
+    background-color: #545455;
+    color: rgb(173, 193, 101);
+    font-family: 'Creepster', cursive;
+}*/
+
+#ghost2 {
+    position: absolute;
+    width: 60px;
+    top:100px;
+    animation: ghost 5s linear;
+    left: 105%;
+}
+
+@keyframes ghost {
+    5%{left: 85%}
+    40%{left: 45%}
+    60%{left: 60%}
+    100%{left: 10%}
 }
