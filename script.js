@@ -1,33 +1,83 @@
 //INICIALIZACION DE PRUEBA
 var usuario = {
     "nombreUsuario": "emederos",
-    "partidas": {"Peliculas": "10","TodasCategorías": "5"}
+    "partidas": { "Peliculas": "10", "TodasCategorías": "5" }
 }
 
 var usuario2 = {
     "nombreUsuario": "jcoronilla",
-    "partidas": {"Peliculas": "10","TodasCategorías": "5"}
+    "partidas": { "Peliculas": "10", "TodasCategorías": "5" }
 }
-var usuariosArray =[usuario2, usuario];
-localStorage.setItem("usuarios",JSON.stringify(usuariosArray))
+var usuariosArray = [usuario2, usuario];
+localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
 
 //DA EFECTO CSS A LAS TRANSICIONES DE LA INTRO
-function efectosCSSIntro(){
+function efectosCSSIntro() {
     document.getElementById("intro").classList.add('hint');
     var container = document.getElementById("container");
     var bienvenida = document.getElementById("bienvenida");
     container.appendChild(bienvenida);
     // document.getElementById("spider-web-right").style.display="";
     // document.getElementById("spider-web-left").style.display="";
-    setTimeout(function(){
-        document.getElementById("intro").style.display="none";
+    setTimeout(function () {
+        document.getElementById("intro").style.display = "none";
     }, 150);
-    setTimeout(function(){
-        bienvenida.style.display="block";
+    setTimeout(function () {
+        bienvenida.style.display = "block";
         bienvenida.classList.add('show');
     }, 200);
 }
 
+//COMPRUEBA SI EL USUARIO YA ESTÁ REGISTRADO O NO 
+function existeUsuario(nombreUsuario) {
+    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var existe = false;
+    //¿HAY ALGUNA FORMA DE HACERLO SIN RECORRER TODO EL ARRAY DE USUARIOS? - QUIZAS CON UN WHILE, COMO SERÍA?
+    for (key in usuarios) {
+        if (usuarios[key].nombreUsuario == nombreUsuario) {
+            existe = true;
+        }
+    }
+    return existe
+}
+
+//AÑADE UN USUARIO CUANDO NO ESTÁ EN EL LOCALSTORAGE
+function addUsuario(nombreUsuario) {
+    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var usuario = {
+        "nombreUsuario": nombreUsuario,
+        "partidas": {}
+    }
+    usuarios.push(usuario);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+}
+
+function registrarUsuario() {
+    var nombreUsuario = document.getElementById("nombreUsuario").value;
+    //var nombreUsuario ="emederos";
+    if (nombreUsuario) {
+        var cabecera = document.getElementById("cabecera2-bienvenida");
+        efectosCSSIntro();
+        if (!existeUsuario(nombreUsuario)) {
+            addUsuario(nombreUsuario);
+            var mensaje = `Bienvenid@, <span id="nombre">${nombreUsuario}</span>`;
+            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png">, ${nombreUsuario}`;
+
+        } else {
+            var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
+            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png"> de nuevo, ${nombreUsuario}`;
+        }
+        cabecera.innerHTML = mensaje;
+        localStorage.setItem("usuarioActual", nombreUsuario);
+    } else {
+        var mensaje = document.createTextNode("El nombre de usuario no puede estar vacío");
+        var parrafo = document.getElementById("mensaje");
+        parrafo.appendChild(mensaje);
+        parrafo.style.display = "";
+    }
+}
+
+//SACA LAS PREGUNTAS DE LA API Y CAMBIA A question.html
 function jugar() {
     var pregunta = document.getElementById('categorias').value;
     fetch(pregunta)
@@ -37,12 +87,18 @@ function jugar() {
             window.location = "question.html";
         })
 }
+
+//FUNCION GENERAL QUE SUBE A LOCALSTORAGE
 function sube(clave, valor) {
     localStorage.setItem(clave, valor);
 }
+
+//FUNCION GENERAL QUE BAJA DE LOCALSTORAGE
 function baja(clave) {
     return localStorage.getItem(clave);
 }
+
+//CARGA LAS PREGUNTAS EN EL NAVEGADOR
 function cargaPreguntas(datos) {
     var pregunta, resCorrecta, resIncorrecta = [];
     for (let i = 0; i < 10; i++) {
@@ -60,6 +116,7 @@ function cargaPreguntas(datos) {
     }
 }
 
+//CREA MENSAJES
 function mensajes(mensaje) {
     document.getElementById('mensajes').innerText = mensaje;
     document.getElementById('mensajes').style.visibility = "visible";
@@ -68,6 +125,7 @@ function mensajes(mensaje) {
     }, 3000);
 }
 
+//EFECTO DE LOS RAYOS
 function rayos() {
     document.getElementById('thunder1').style.visibility = "visible";
     document.getElementById('thunder2').style.visibility = "visible";
@@ -80,6 +138,7 @@ function rayos() {
 
 }
 
+//IMPRIME LAS PREGUNTAS Y RESPUESTAS
 function pintaPregunta(numPregunta) {
     numPregunta = parseInt(numPregunta);
     if (numPregunta <= 9 || numPregunta == 0) {
@@ -106,6 +165,8 @@ function pintaPregunta(numPregunta) {
         document.querySelectorAll('h3')[0].innerText = "Player: " + baja('usuarioActual');
         sube('numPregunta', (numPregunta + 1));
         sube('correcta', correcta);
+
+        //EN CASO DE NO HABER MÁS PREGUNTAS ENLAA A RESULTS.HTML
     } else {
         mensajes('¡Final!');
         rayos();
@@ -115,6 +176,7 @@ function pintaPregunta(numPregunta) {
     }
 }
 
+//COMPRUEBA LA RESPUESTA DEL USUARIO
 function comprobarRespuesta(respuesta) {
     var correcta = baja('correcta');
     if (correcta == parseInt(respuesta)) {
@@ -126,6 +188,7 @@ function comprobarRespuesta(respuesta) {
     }
 }
 
+//EFECTOS DE ACIERTOS Y ENLACE A SIGUIENTE PREGUNTA
 function correcto(respuesta) {
     var id = `res${respuesta}`;
     document.getElementById(id).style.backgroundColor = "rgb(0, 131, 0)"
@@ -138,63 +201,26 @@ function correcto(respuesta) {
     }, 5000);
 }
 
+//EFECTOS DE ERROR Y ENLACE A SIGUIENTE PREGUNTA
 function incorrecto(respuesta) {
     var id = `res${respuesta}`;
     document.getElementById(id).style.backgroundColor = "#f50813";
     var grito = document.getElementsByTagName("audio")[1];
     grito.play();
     mensajes('¡Uy! Qué miedito');
+    var correcta = baja('correcta');
+    var id = `res${correcta}`;
+    document.getElementById(id).style.backgroundColor = "white"
+    document.getElementById(id).style.color = "#636b82"
     setTimeout(function () {
         numPregunta = baja('numPregunta');
+        document.getElementById(id).style.color = "white"
         pintaPregunta(numPregunta);
     }, 5000);
 }
 
-//COMPRUEBA SI EL USUARIO YA ESTÁ REGISTRADO O NO 
-function existeUsuario(nombreUsuario){
-    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
-    var existe=false;
-    //¿HAY ALGUNA FORMA DE HACERLO SIN RECORRER TODO EL ARRAY DE USUARIOS? - QUIZAS CON UN WHILE, COMO SERÍA?
-    for (key in usuarios){
-        if (usuarios[key].nombreUsuario == nombreUsuario){
-            existe= true;
-        }
-    }
-    return existe
-}
 
-//AÑADE UN USUARIO CUANDO NO ESTÁ EN EL LOCALSTORAGE
-function addUsuario(nombreUsuario){
-    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
-    var usuario = {
-        "nombreUsuario" : nombreUsuario,
-        "partidas": {}
-    }
-    usuarios.push(usuario);
-    localStorage.setItem("usuarios",JSON.stringify(usuarios));
-}
+//INICIA IMPRESIÓN DE GRÁFICAS
+function graficas() {
 
-function registrarUsuario(){
-    var nombreUsuario = document.getElementById("nombreUsuario").value;
-    //var nombreUsuario ="emederos";
-    if(nombreUsuario) {
-        var cabecera = document.getElementById("cabecera2-bienvenida");
-        efectosCSSIntro();
-        if (!existeUsuario(nombreUsuario)){
-            addUsuario(nombreUsuario);
-            var mensaje = `Bienvenid@, <span id="nombre">${nombreUsuario}</span>`;
-            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png">, ${nombreUsuario}`;
-
-        }else{
-            var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
-            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png"> de nuevo, ${nombreUsuario}`;
-        }
-        cabecera.innerHTML=mensaje;
-        localStorage.setItem("usuarioActual", nombreUsuario);
-    }else{
-        var mensaje = document.createTextNode("El nombre de usuario no puede estar vacío");
-        var parrafo = document.getElementById("mensaje");
-        parrafo.appendChild(mensaje);
-        parrafo.style.display="";
-    }
 }
