@@ -1,6 +1,3 @@
-/* background-color: #383E4E
-color naranja: #FF7200
-botones: #262A35 */
 /* -------------- EFECTOS Y ANIMACIONES --------------- */
 .smoke {
     filter: url('#filter');
@@ -49,6 +46,13 @@ body {
     margin-right: 30px;
     font-size: 20px;
     /* text-decoration: underline; */
+}
+
+#navigation h3#statistics img {
+    vertical-align: middle;
+}
+#navigation h3#statistics img:hover {
+    width:32px;
 }
 
 .space70 {
@@ -121,9 +125,11 @@ h2 {
 
 h2#statictis-header{
     text-align: center;
-    color: rgb(173, 193, 101);
+    color:#e87425;
+    text-shadow: 2px 3px lemonchiffon;
     font-family: 'Creepster', cursive;
     margin-top: 0px;
+    margin-bottom: 15px;;
     font-size: 36px;
 }
 h2#statictis-header span{

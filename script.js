@@ -53,6 +53,8 @@ function efectosCSSIntro() {
 }
 
 function cerrarEstadisticas(){
+    document.getElementById("container-statistics").innerHTML="";
+    document.getElementById("container-statistics").innerHTML='<h2 id="statictis-header">Your Statistics <span id="close" onclick="cerrarEstadisticas()">X</span></h2><canvas id="statistics-div"></canvas>'
     document.getElementById("container-statistics").style.display = "none";
 }
 
@@ -330,7 +332,8 @@ function cargarPartida() {
 }
 
 function pintarGrafica (etiquetas, valores, titulo, id) {
-      const data = {
+    var myChart
+      var data = {
         labels: etiquetas,
         datasets: [{
           label: titulo,
@@ -341,7 +344,7 @@ function pintarGrafica (etiquetas, valores, titulo, id) {
         }]
       };
     
-    const config = {
+    var config = {
         type: 'bar',
         data: data,
         options: {
@@ -352,7 +355,7 @@ function pintarGrafica (etiquetas, valores, titulo, id) {
             }
           },
     }
-      const myChart = new Chart(
+      var myChart = new Chart(
         document.getElementById(id),
         config
     );
