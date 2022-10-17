@@ -97,6 +97,17 @@ body {
     text-align: right;
 }
 
+h2 {
+    margin-bottom: 0px;
+}
+
+h2 span{
+    margin-bottom: 0px;
+    font-size: 70px;
+    color:#e87425;
+    text-shadow: 2px 3px lemonchiffon;
+}
+
 #formulario {
     margin: 90px 0px;
 }
@@ -243,6 +254,7 @@ header h3 {
     flex-direction: column;
     align-items: center;
     margin: 60px auto auto auto;
+
     background-color: #26282c;
     border-radius: 15px;
     width: 500px;
