@@ -421,7 +421,7 @@ header+h2 {
 
 #ghost2 {
     position: absolute;
-    width: 60px;
+    width: 160px;
     top:300px;
     animation: ghost 9s linear;
     left: 90%;
@@ -437,15 +437,19 @@ header+h2 {
 
 #mensajeFantasma {
     position:relative;
-    height: 70px;
-    width: 150px;
+    height: 96px;
+    width: 195px;
+    top: 80px;
     background: white;
     box-shadow: 1px 12px 33px rgba(255, 255, 255, 0.5);
     visibility: hidden;
+    /* color:black; */
+    border-radius: 30px;;
 }
 
 #mensajeFantasma:before {
     border: 25px solid white;
+    color:black;
     content: '';
     border-left-color: transparent;
     border-bottom-color: transparent;
@@ -457,7 +461,9 @@ header+h2 {
 
 #mensajeFantasma p {
     text-align: center;
-    font-size: 25px;
+    font-size: 30px;
+    color: #3d324c;;
+    font-family: 'Creepster', cursive;
 }
 .spacer {
     height: 200px;
@@ -484,5 +490,10 @@ header+h2 {
 }
 
 #stats {
-    margin-top: 200px;;
+    /* margin-top: 200px; */
+    width: 800px;
+}
+
+#jugar-otra{
+    margin:0px;
 }

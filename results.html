@@ -14,25 +14,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 </head>
 <link rel="stylesheet" href="style.css">
 </head>
-
-<body onload="graficas();">
-    <div class="spacer"></div>
+<body onload="results();">
+    <div class="space70"></div>
+        <div id="stats"  class="container" style="display:none">
+            <canvas id="myChart"></canvas>
+        </div>
     <img src="../images/ghost (1).png" id="ghost2">
-    <div id="resultad"></div>
     <div id="mensajeFantasma"><p>Score: </p></div>
+    <button id="jugar-otra" onclick="jugarOtra()"  style="display:none">PLAY AGAIN?</button>
     <audio>
         <source src="../sounds/CREAEthr_Ghost 1 (ID 2046)_BSB.wav">
         </source>
     </audio>
-    <div id="stats">
-        <canvas id="myChart"></canvas>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>

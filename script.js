@@ -299,8 +299,9 @@ function incorrecto(respuesta) {
     }, 5000);
 }
 
-function graficas() {
-    document.querySelector('#mensajeFantasma p').innerText = "Score: " + baja('score');
+function results() {
+    document.querySelector('#mensajeFantasma p').innerHTML = "Score: " + baja('score');
+    console.log(document.querySelector('#mensajeFantasma p'));
     setTimeout(function () {
         document.getElementById('mensajeFantasma').style.visibility = "visible"
     }, 3500);
@@ -315,7 +316,12 @@ function graficas() {
         let avg = sum / usuarios[key].partidas.length;
         valores.push(avg)
     }
-   pintarGrafica(labels, valores, "Ranking",'myChart');
+    setTimeout(function () {
+        document.getElementById("stats").style.display="";
+        pintarGrafica(labels, valores, "Ranking",'myChart');
+        document.getElementById("jugar-otra").style.display="";
+    }, 9000);
+  
 }
 
 function cargarPartida() {
