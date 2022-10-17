@@ -13,12 +13,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav id="navigation" style="display:none"><h3 id="statistics" onclick="statistics()">Statistics </h3></nav>
     <div class="space70"></div>
+    <div id="container-statistics" class="container" style="display:none">
+        <h2 id="statictis-header">Your Statistics <span id="close" onclick="cerrarEstadisticas()">X</span></h2>
+        <canvas id="statistics-div"></canvas>
+    </div>
     <div id="container" class="container show">
         <div id="intro" class="flex-center-column">
             <h1><span class="smoke">Hall</span><img src="images/pumpkin_scalated.png"><span class="smoke">ween</span></h1>
@@ -56,7 +58,8 @@
           <feTurbulence id="turbulence" type="fractalNoise" baseFrequency=".03" numOctaves="20" />
           <feDisplacementMap in="SourceGraphic" scale="30" />
         </filter>
-      </svg>
+    </svg>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

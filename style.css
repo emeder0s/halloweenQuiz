@@ -21,9 +21,6 @@ botones: #262A35 */
 }
 
 .hint{
-    /* transform: translateY(500px); */
-    /* opacity: 0;
-    transition: opacity 1s;*/
     animation: fadeout 3s;
 } 
 
@@ -37,6 +34,21 @@ body {
     align-items: center;
     align-content: center;
     flex-direction: column;
+}
+
+#navigation {
+    background-color: hsl(224, 18%, 16%, 0.5);
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 17px 10px;
+}
+
+#navigation #statistics {
+    cursor: pointer;
+    margin-right: 30px;
+    font-size: 20px;
+    /* text-decoration: underline; */
 }
 
 .space70 {
@@ -53,6 +65,11 @@ body {
     border-radius: 27px;
     box-shadow: 1px 1px 12px #16191f;
     background: #383e4e;
+}
+
+#container-statistics{
+    margin-bottom: 50px;
+    width: 647px;
 }
 
 .flex-center-column {
@@ -91,6 +108,7 @@ body {
 
 #intro h2 {
     font-size: 50px;
+    font-family: 'Creepster', cursive;
     margin: 0;
     margin-right: 10px;
     line-height: 4px;
@@ -99,6 +117,26 @@ body {
 
 h2 {
     margin-bottom: 0px;
+}
+
+h2#statictis-header{
+    text-align: center;
+    color: rgb(173, 193, 101);
+    font-family: 'Creepster', cursive;
+    margin-top: 0px;
+    font-size: 36px;
+}
+h2#statictis-header span{
+    position: relative;
+    top: -31px;
+    left: 218px;
+    font-size: 27px;
+    text-shadow: 1px 1px 0px black;
+}
+
+h2#statictis-header span:hover{
+    font-size: 30px;
+    cursor: pointer;
 }
 
 h2 span{
@@ -368,9 +406,10 @@ header h3 {
 }
 
 header+h2 {
-    font-size: 50px;
+    font-size: 30px;
     font-family: 'Creepster', cursive;
-    color: rgb(173, 193, 101);
+    /* color: rgb(173, 193, 101); */
+    color:white;
     margin: 0;
 }
 
