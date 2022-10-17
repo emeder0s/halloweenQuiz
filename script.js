@@ -103,7 +103,8 @@ function addUsuario(nombreUsuario) {
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
     var usuario = {
         "nombreUsuario": nombreUsuario,
-        "partidas": []
+        "partidas": [],
+        "fechasPartidas": []
     }
     usuarios.push(usuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
@@ -228,7 +229,7 @@ function pintaPregunta(numPregunta) {
     } else {
         mensajes('¡Final!');
         rayos();
-        guardarPartida()
+        cargarPartida()
         setTimeout(function () {
             window.location = "results.html";
         }, 7000);
@@ -329,6 +330,7 @@ function cargarPartida() {
     var date = new Date();
     date = date.toISOString().split('T')[0];
     for (key in usuarios) {
+        console.log(date);
         if (usuarios[key].nombreUsuario == baja("usuarioActual")) {
             usuarios[key].partidas.push(baja('score'));
             usuarios[key].fechasPartidas.push(date);
