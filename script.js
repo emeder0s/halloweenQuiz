@@ -1,12 +1,14 @@
 //INICIALIZACION DE PRUEBA
 var usuario = {
     "nombreUsuario": "emederos",
-    "partidas": [ 10, 5 ]
+    "partidas": [ 10, 5 ],
+    "fechasPartidas": ["2022-10-16","2022-10-17"]
 }
 
 var usuario2 = {
     "nombreUsuario": "jcoronilla",
-    "partidas": [ 10, 5 ]
+    "partidas": [ 10, 7],
+    "fechasPartidas": ["2022-10-16","2022-10-17"]
 }
 var usuariosArray = [usuario2, usuario];
 localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
@@ -39,8 +41,6 @@ function efectosCSSIntro() {
     var container = document.getElementById("container");
     var bienvenida = document.getElementById("bienvenida");
     container.appendChild(bienvenida);
-    // document.getElementById("spider-web-right").style.display="";
-    // document.getElementById("spider-web-left").style.display="";
     setTimeout(function () {
         document.getElementById("intro").style.display = "none";
     }, 150);
@@ -50,15 +50,46 @@ function efectosCSSIntro() {
     }, 200);
 }
 
+function cerrarEstadisticas(){
+    document.getElementById("container-statistics").style.display = "none";
+}
+
+function statistics(){
+    var nombreUsuario = baja("usuarioActual");
+    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var encontrado = false;
+    var key = 0;
+    var labels = [];
+    var values = [];
+    while (!encontrado && key<usuarios.length){
+        if (usuarios[key].nombreUsuario == nombreUsuario) {
+            for(let i in usuarios[key].partidas){
+                values.push(usuarios[key].partidas[i]);
+            }
+            for(let i in usuarios[key].fechasPartidas){
+                labels.push(usuarios[key].fechasPartidas[i]);
+            }
+            encontrado = true;  
+        }
+        key++;
+    }
+    pintarGrafica (labels, values, "Score", "statistics-div");
+    document.getElementById("container-statistics").style.display = "block";
+    document.getElementById("container-statistics").classList.add('show');
+
+}
+
 //COMPRUEBA SI EL USUARIO YA ESTÁ REGISTRADO O NO 
 function existeUsuario(nombreUsuario) {
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
     var existe = false;
-    //¿HAY ALGUNA FORMA DE HACERLO SIN RECORRER TODO EL ARRAY DE USUARIOS? - QUIZAS CON UN WHILE, COMO SERÍA?
-    for (key in usuarios) {
+    var key = 0;
+
+    while (!existe && key<usuarios.length){
         if (usuarios[key].nombreUsuario == nombreUsuario) {
             existe = true;
         }
+        key++
     }
     return existe
 }
@@ -83,11 +114,10 @@ function registrarUsuario() {
         if (!existeUsuario(nombreUsuario)) {
             addUsuario(nombreUsuario);
             var mensaje = `Bienvenid@, <span id="nombre">${nombreUsuario}</span>`;
-            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png">, ${nombreUsuario}`;
 
         } else {
             var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
-            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png"> de nuevo, ${nombreUsuario}`;
+            document.getElementById("navigation").style.display="";
         }
         cabecera.innerHTML = mensaje;
         localStorage.setItem("usuarioActual", nombreUsuario);
@@ -251,51 +281,57 @@ function graficas() {
         document.getElementById('mensajeFantasma').style.visibility = "hidden"
     }, 7000);
     var usuarios = JSON.parse(baja('usuarios'));
-    console.log(usuarios)
     var labels = [], valores = [];
     for (key in usuarios) {
         labels.push(usuarios[key].nombreUsuario);
-        console.log(usuarios[key])
         let sum = usuarios[key].partidas.reduce((previous, current) => current += previous);
         let avg = sum / usuarios[key].partidas.length;
         valores.push(avg)
     }
-   pintarGrafica(labels, valores);
+   pintarGrafica(labels, valores, "Ranking",'myChart');
 }
 
 function cargarPartida() {
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var date = new Date();
+    date = date.toISOString().split('T')[0];
     for (key in usuarios) {
-        if (usuarios[key].nombreUsuario == baja(usuarioActual)) {
-            usuarios[key].partidas.push(baja('score')) 
+        if (usuarios[key].nombreUsuario == baja("usuarioActual")) {
+            usuarios[key].partidas.push(baja('score'));
+            usuarios[key].fechasPartidas.push(date);
             localStorage.setItem("usuarios", JSON.stringify(usuarios));
         }
     }
 }
 
-function pintarGrafica (etiquetas, valores) {
-    
-
+function pintarGrafica (etiquetas, valores, titulo, id) {
       const data = {
         labels: etiquetas,
         datasets: [{
-          label: 'My First dataset',
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
+          label: titulo,
+          backgroundColor: 'rgb(173, 193, 101)',
+          borderColor: '#fff',
+          color: '#fff',
           data: valores,
         }]
       };
     
-      const config = {
+    const config = {
         type: 'bar',
         data: data,
-        options: {}
-      };
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          },
+    }
 
       const myChart = new Chart(
-        document.getElementById('myChart'),
+        document.getElementById(id),
         config
-      );
+    );
 }
 
 
