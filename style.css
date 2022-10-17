@@ -374,44 +374,70 @@ header+h2 {
     margin: 0;
 }
 
-/*
-input, select, option {
-    border: 2px solid #FF7200;
-    border-radius: 15px;
-    font-size: 20px;
-    width:auto;
-    background-color: #545455;
-    color: rgb(173, 193, 101);
-    font-family: 'Creepster', cursive;
-}*/
-
 #ghost2 {
     position: absolute;
     width: 60px;
-    top:100px;
-    animation: ghost 7s linear;
+    top:300px;
+    animation: ghost 9s linear;
     left: 90%;
 }
 
 @keyframes ghost {
     5%{left: 85%}
-    40%{left: 45%}
-    59%{left: 45%}
-    75%{left: 60%}
-    100%{left: 10%}
+    40%{left: 45%;}
+    70%{left: 45%}
+    80%{left: 40%}
+    100%{left: 90%}
 }
 
 #mensajeFantasma {
-    background-color: white;
-    border: 2px solid #FF7200;
-    width:300px;
-    height: 100px;
-    color: #6d4bc9;
-    margin-top: 150px;
+    position:relative;
+    height: 70px;
+    width: 150px;
+    background: white;
+    box-shadow: 1px 12px 33px rgba(255, 255, 255, 0.5);
     visibility: hidden;
+}
+
+#mensajeFantasma:before {
+    border: 25px solid white;
+    content: '';
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    bottom: -48px;
+    left: calc(50% - 25px);
 }
 
 #mensajeFantasma p {
     text-align: center;
     font-size: 25px;
+}
+.spacer {
+    height: 200px;
+    width: 20px;
+}
+
+#reloj {
+    color: rgb(173, 193, 101);
+    font-family: 'Creepster', cursive;
+    font-size: 50px;
+}
+
+
+#muerte {
+    position: relative;
+    width: 70px;
+    animation:  muerte 1s infinite;
+    visibility: hidden;
+}
+
+@keyframes muerte {
+    0%{width: 80px;}
+    50%{width:70px;}    
+}
+
+#stats {
+    margin-top: 200px;;
 }
