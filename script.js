@@ -1,8 +1,8 @@
 //INICIALIZACION DE PRUEBA
 var usuario = {
     "nombreUsuario": "emederos",
-    "partidas": [ 10, 5 ],
-    "fechasPartidas": ["2022-10-16","2022-10-17"]
+    "partidas": [ 10, 5, 10, 5 ],
+    "fechasPartidas": ["2022-10-16","2022-10-17","2022-10-20","2022-10-21"]
 }
 
 var usuario2 = {
@@ -343,17 +343,31 @@ function pintarGrafica (etiquetas, valores, titulo, id) {
           data: valores,
         }]
       };
-    
+    var options = {
+        scales: {
+          x: {
+            ticks: {
+              font: {
+                size: 10,
+              },
+              backgroundColor: "red", // not working
+              color: "white",　　// worked
+            },
+          },
+          y: {
+            min: 0,
+            max: 10,
+            ticks: {
+            //   stepSize: 2,
+              color: "white"
+            },
+          },
+        },
+      };
     var config = {
         type: 'bar',
         data: data,
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          },
+        options: options
     }
       var myChart = new Chart(
         document.getElementById(id),
