@@ -1,5 +1,6 @@
 //INICIALIZACION DE PRUEBA
-var usuario = {
+function inicializar(){
+    var usuario = {
     "nombreUsuario": "emederos",
     "partidas": [ 10, 5, 10, 5 ],
     "fechasPartidas": ["2022-10-16","2022-10-17","2022-10-20","2022-10-21"]
@@ -12,8 +13,7 @@ var usuario2 = {
 }
 var usuariosArray = [usuario2, usuario];
 localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
-sube('correcta', 5)
-var tiempo = 10;
+}
 
 //CÓDIGO PARA CREAR EL EFECTO SMOKE
 const filter = document.querySelector("#turbulence");
@@ -110,6 +110,7 @@ function addUsuario(nombreUsuario) {
 }
 
 function registrarUsuario() {
+    inicializar();
     var nombreUsuario = document.getElementById("nombreUsuario").value;
     //var nombreUsuario ="emederos";
     if (nombreUsuario) {
@@ -301,7 +302,6 @@ function incorrecto(respuesta) {
 
 function results() {
     document.querySelector('#mensajeFantasma p').innerHTML = "Score: " + baja('score');
-    console.log(document.querySelector('#mensajeFantasma p'));
     setTimeout(function () {
         document.getElementById('mensajeFantasma').style.visibility = "visible"
     }, 3500);
