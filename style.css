@@ -350,6 +350,27 @@ header h3 {
     z-index: -1;
 }
 
+/*RELOJ*/
+#reloj {
+    color: rgb(173, 193, 101);
+    font-family: 'Creepster', cursive;
+    font-size: 50px;
+}
+
+
+#muerte {
+    position: relative;
+    width: 70px;
+    animation:  muerte 1s infinite;
+    visibility: hidden;
+}
+
+@keyframes muerte {
+    0%{width: 80px;}
+    50%{width:70px;}    
+}
+
+
 /*MENSAJES*/
 #mensajes {
     position: absolute;
@@ -413,10 +434,11 @@ header+h2 {
     margin: 0;
 }
 
+/*PÁGINA RESULTADOS*/
 #ghost2 {
     position: absolute;
     width: 60px;
-    top:300px;
+    top:370px;
     animation: ghost 9s linear;
     left: 90%;
 }
@@ -431,8 +453,8 @@ header+h2 {
 
 #mensajeFantasma {
     position:relative;
-    height: 70px;
-    width: 150px;
+    height: 100px;
+    width: 200px;
     background: white;
     box-shadow: 1px 12px 33px rgba(255, 255, 255, 0.5);
     visibility: hidden;
@@ -451,30 +473,14 @@ header+h2 {
 
 #mensajeFantasma p {
     text-align: center;
-    font-size: 25px;
-}
-.spacer {
-    height: 200px;
-    width: 20px;
-}
-
-#reloj {
     color: rgb(173, 193, 101);
     font-family: 'Creepster', cursive;
-    font-size: 50px;
+    font-size: 30px;
+    margin-bottom: 15px;
 }
-
-
-#muerte {
-    position: relative;
-    width: 70px;
-    animation:  muerte 1s infinite;
-    visibility: hidden;
-}
-
-@keyframes muerte {
-    0%{width: 80px;}
-    50%{width:70px;}    
+.spacer {
+    height: 240px;
+    width: 20px;
 }
 
 #stats {

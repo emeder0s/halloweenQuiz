@@ -1,19 +1,22 @@
 //INICIALIZACION DE PRUEBA
 var usuario = {
     "nombreUsuario": "emederos",
-    "partidas": [ 10, 5 ],
-    "fechasPartidas": ["2022-10-16","2022-10-17"]
+    "partidas": [10, 5],
+    "fechasPartidas": ["2022-10-16", "2022-10-17"]
 }
 
 var usuario2 = {
     "nombreUsuario": "jcoronilla",
-    "partidas": [ 10, 7],
-    "fechasPartidas": ["2022-10-16","2022-10-17"]
+    "partidas": [10, 7],
+    "fechasPartidas": ["2022-10-16", "2022-10-17"]
 }
+
+//INICIO DE VARIABLES Y VALORES POR DEFECTO
 var usuariosArray = [usuario2, usuario];
 localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
 sube('correcta', 5)
 var tiempo = 10;
+var audio = document.getElementsByTagName("audio")
 
 //CÓDIGO PARA CREAR EL EFECTO SMOKE
 const filter = document.querySelector("#turbulence");
@@ -52,30 +55,30 @@ function efectosCSSIntro() {
     }, 200);
 }
 
-function cerrarEstadisticas(){
+function cerrarEstadisticas() {
     document.getElementById("container-statistics").style.display = "none";
 }
 
-function statistics(){
+function statistics() {
     var nombreUsuario = baja("usuarioActual");
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
     var encontrado = false;
     var key = 0;
     var labels = [];
     var values = [];
-    while (!encontrado && key<usuarios.length){
+    while (!encontrado && key < usuarios.length) {
         if (usuarios[key].nombreUsuario == nombreUsuario) {
-            for(let i in usuarios[key].partidas){
+            for (let i in usuarios[key].partidas) {
                 values.push(usuarios[key].partidas[i]);
             }
-            for(let i in usuarios[key].fechasPartidas){
+            for (let i in usuarios[key].fechasPartidas) {
                 labels.push(usuarios[key].fechasPartidas[i]);
             }
-            encontrado = true;  
+            encontrado = true;
         }
         key++;
     }
-    pintarGrafica (labels, values, "Score", "statistics-div");
+    pintarGrafica(labels, values, "Score", "statistics-div");
     document.getElementById("container-statistics").style.display = "block";
     document.getElementById("container-statistics").classList.add('show');
 
@@ -87,7 +90,7 @@ function existeUsuario(nombreUsuario) {
     var existe = false;
     var key = 0;
 
-    while (!existe && key<usuarios.length){
+    while (!existe && key < usuarios.length) {
         if (usuarios[key].nombreUsuario == nombreUsuario) {
             existe = true;
         }
@@ -119,7 +122,7 @@ function registrarUsuario() {
 
         } else {
             var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
-            document.getElementById("navigation").style.display="";
+            document.getElementById("navigation").style.display = "";
         }
         cabecera.innerHTML = mensaje;
         localStorage.setItem("usuarioActual", nombreUsuario);
@@ -166,35 +169,36 @@ function cargaPreguntas(datos) {
         sube(`resIncorrecta${i}`, JSON.stringify(resIncorrecta));
         sube('numPregunta', 0);
         sube('score', 0);
-        //Falta poner el nombre de usuario---
     }
 }
 
 //CREA MENSAJES
 function mensajes(mensaje) {
-    document.getElementById('mensajes').innerText = mensaje;
-    document.getElementById('mensajes').style.visibility = "visible";
+    var menDoc = document.getElementById('mensajes');
+    menDoc.innerText = mensaje;
+    menDoc.style.visibility = "visible";
     setTimeout(function () {
-        document.getElementById('mensajes').style.visibility = "hidden";
+        menDoc.style.visibility = "hidden";
     }, 1500);
 }
 
 //EFECTO DE LOS RAYOS
 function rayos() {
-    document.getElementById('thunder1').style.visibility = "visible";
-    document.getElementById('thunder2').style.visibility = "visible";
-    var thunder = document.getElementsByTagName("audio")[2];
-    thunder.play();
+    var thunder1 = document.getElementById('thunder1').style.visibility;
+    var thunder2 = document.getElementById('thunder2').style.visibility;
+    thunder1 = "visible";
+    thunder2 = "visible";
+    audio[2].play();
     setTimeout(function () {
-        document.getElementById('thunder1').style.visibility = "hidden";
-        document.getElementById('thunder2').style.visibility = "hidden";
+        thunder1 = "hidden";
+        thunder2 = "hidden";
     }, 3000);
 
 }
 
 //IMPRIME LAS PREGUNTAS Y RESPUESTAS
 function pintaPregunta(numPregunta) {
-    tiempo=10;
+    tiempo = 10;
     numPregunta = parseInt(numPregunta);
     if (numPregunta <= 9) {
         var pregunta = baja(`Pregunta${(numPregunta)}`);
@@ -225,25 +229,25 @@ function pintaPregunta(numPregunta) {
     } else {
         mensajes('¡Final!');
         rayos();
-        guardarPartida()
+        cargarPartida();
         setTimeout(function () {
             window.location = "results.html";
-        }, 7000);
+        }, 4000);
     }
 }
 
 //Cuenta atrás
 function reloj() {
-    document.getElementById('muerte').style.visibility="visible";
+    document.getElementById('muerte').style.visibility = "visible";
     tiempo--;
     document.getElementById("reloj").innerHTML = String(tiempo);
     if (tiempo > 0 && baja('correcta') < 5) {
         setTimeout(reloj, 1000);
-        document.getElementsByTagName("audio")[4].play();
+        audio[4].play();
     }
     if (tiempo < 1 && baja('correcta') < 5) {
-        document.getElementsByTagName("audio")[3].play();
-        document.getElementById('muerte').style.visibility="hidden";
+        audio[3].play();
+        document.getElementById('muerte').style.visibility = "hidden";
         comprobarRespuesta(5);
     }
 };
@@ -267,8 +271,7 @@ function comprobarRespuesta(respuesta) {
 function correcto(respuesta) {
     var id = `res${respuesta}`;
     document.getElementById(id).style.backgroundColor = "rgb(0, 131, 0)"
-    var risa = document.getElementsByTagName("audio")[0];
-    risa.play();
+    audio[0].play();
     mensajes('Terrorífico!!');
     setTimeout(function () {
         numPregunta = baja('numPregunta');
@@ -278,13 +281,11 @@ function correcto(respuesta) {
 
 //EFECTOS DE ERROR Y ENLACE A SIGUIENTE PREGUNTA
 function incorrecto(respuesta) {
-    if (respuesta<5) {
+    if (respuesta < 5) {
         var id = `res${respuesta}`;
         document.getElementById(id).style.backgroundColor = "#f50813";
-    } 
-   
-    var grito = document.getElementsByTagName("audio")[1];
-    grito.play();
+    }
+    audio[1].play();
     mensajes('¡Uy! Qué miedito');
     var correcta = baja('correcta');
     var id = `res${correcta}`;
@@ -292,6 +293,7 @@ function incorrecto(respuesta) {
     document.getElementById(id).style.color = "#636b82"
     setTimeout(function () {
         numPregunta = baja('numPregunta');
+        document.getElementById(id).style.backgroundColor = "#383E4E"
         document.getElementById(id).style.color = "white"
         pintaPregunta(numPregunta);
     }, 5000);
@@ -313,7 +315,7 @@ function graficas() {
         let avg = sum / usuarios[key].partidas.length;
         valores.push(avg)
     }
-   pintarGrafica(labels, valores, "Ranking",'myChart');
+    pintarGrafica(labels, valores, "Ranking", 'myChart');
 }
 
 function cargarPartida() {
@@ -329,30 +331,30 @@ function cargarPartida() {
     }
 }
 
-function pintarGrafica (etiquetas, valores, titulo, id) {
-      const data = {
+function pintarGrafica(etiquetas, valores, titulo, id) {
+    const data = {
         labels: etiquetas,
         datasets: [{
-          label: titulo,
-          backgroundColor: 'rgb(173, 193, 101)',
-          borderColor: '#fff',
-          color: '#fff',
-          data: valores,
+            label: titulo,
+            backgroundColor: 'rgb(173, 193, 101)',
+            borderColor: '#fff',
+            color: '#fff',
+            data: valores,
         }]
-      };
-    
+    };
+
     const config = {
         type: 'bar',
         data: data,
         options: {
             scales: {
-              y: {
-                beginAtZero: true
-              }
+                y: {
+                    beginAtZero: true
+                }
             }
-          },
+        },
     }
-      const myChart = new Chart(
+    const myChart = new Chart(
         document.getElementById(id),
         config
     );
