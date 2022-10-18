@@ -1,8 +1,10 @@
 //INICIALIZACION DE PRUEBA
-var usuario = {
+function inicializar(){
+    var usuario = {
     "nombreUsuario": "emederos",
-    "partidas": [10, 5],
-    "fechasPartidas": ["2022-10-16", "2022-10-17"]
+
+    "partidas": [ 10, 5, 10, 5 ],
+    "fechasPartidas": ["2022-10-16","2022-10-17","2022-10-20","2022-10-21"]
 }
 
 var usuario2 = {
@@ -17,6 +19,8 @@ localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
 sube('correcta', 5)
 var tiempo = 10;
 var audio = document.getElementsByTagName("audio")
+}
+
 
 //CÓDIGO PARA CREAR EL EFECTO SMOKE
 const filter = document.querySelector("#turbulence");
@@ -55,7 +59,10 @@ function efectosCSSIntro() {
     }, 200);
 }
 
-function cerrarEstadisticas() {
+
+function cerrarEstadisticas(){
+    document.getElementById("container-statistics").innerHTML="";
+    document.getElementById("container-statistics").innerHTML='<h2 id="statictis-header">Your Statistics <span id="close" onclick="cerrarEstadisticas()">X</span></h2><canvas id="statistics-div"></canvas>'
     document.getElementById("container-statistics").style.display = "none";
 }
 
@@ -104,13 +111,15 @@ function addUsuario(nombreUsuario) {
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
     var usuario = {
         "nombreUsuario": nombreUsuario,
-        "partidas": []
+        "partidas": [],
+        "fechasPartidas": []
     }
     usuarios.push(usuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 }
 
 function registrarUsuario() {
+    inicializar();
     var nombreUsuario = document.getElementById("nombreUsuario").value;
     //var nombreUsuario ="emederos";
     if (nombreUsuario) {
@@ -299,8 +308,8 @@ function incorrecto(respuesta) {
     }, 5000);
 }
 
-function graficas() {
-    document.querySelector('#mensajeFantasma p').innerText = "Score: " + baja('score');
+function results() {
+    document.querySelector('#mensajeFantasma p').innerHTML = "Score: " + baja('score');
     setTimeout(function () {
         document.getElementById('mensajeFantasma').style.visibility = "visible"
     }, 3500);
@@ -315,7 +324,12 @@ function graficas() {
         let avg = sum / usuarios[key].partidas.length;
         valores.push(avg)
     }
-    pintarGrafica(labels, valores, "Ranking", 'myChart');
+
+    setTimeout(function () {
+        document.getElementById("stats").style.display="";
+        pintarGrafica(labels, valores, "Ranking",'myChart');
+        document.getElementById("jugar-otra").style.display="";
+    }, 9000);
 }
 
 function cargarPartida() {
@@ -323,6 +337,7 @@ function cargarPartida() {
     var date = new Date();
     date = date.toISOString().split('T')[0];
     for (key in usuarios) {
+        console.log(date);
         if (usuarios[key].nombreUsuario == baja("usuarioActual")) {
             usuarios[key].partidas.push(baja('score'));
             usuarios[key].fechasPartidas.push(date);
@@ -331,8 +346,10 @@ function cargarPartida() {
     }
 }
 
-function pintarGrafica(etiquetas, valores, titulo, id) {
-    const data = {
+
+function pintarGrafica (etiquetas, valores, titulo, id) {
+    var myChart
+      var data = {
         labels: etiquetas,
         datasets: [{
             label: titulo,
@@ -341,20 +358,35 @@ function pintarGrafica(etiquetas, valores, titulo, id) {
             color: '#fff',
             data: valores,
         }]
-    };
 
-    const config = {
+      };
+    var options = {
+        scales: {
+          x: {
+            ticks: {
+              font: {
+                size: 10,
+              },
+              backgroundColor: "red", // not working
+              color: "white",　　// worked
+            },
+          },
+          y: {
+            min: 0,
+            max: 10,
+            ticks: {
+            //   stepSize: 2,
+              color: "white"
+            },
+          },
+        },
+      };
+    var config = {
         type: 'bar',
         data: data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        },
+        options: options
     }
-    const myChart = new Chart(
+      var myChart = new Chart(
         document.getElementById(id),
         config
     );
