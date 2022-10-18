@@ -1,33 +1,155 @@
 //INICIALIZACION DE PRUEBA
-var usuario = {
+function inicializar(){
+    var usuario = {
     "nombreUsuario": "emederos",
-    "partidas": {"Peliculas": "10","TodasCategorías": "5"}
+
+    "partidas": [ 10, 5, 10, 5 ],
+    "fechasPartidas": ["2022-10-16","2022-10-17","2022-10-20","2022-10-21"]
 }
 
 var usuario2 = {
     "nombreUsuario": "jcoronilla",
-    "partidas": {"Peliculas": "10","TodasCategorías": "5"}
+    "partidas": [10, 7],
+    "fechasPartidas": ["2022-10-16", "2022-10-17"]
 }
-var usuariosArray =[usuario2, usuario];
-localStorage.setItem("usuarios",JSON.stringify(usuariosArray))
+
+//INICIO DE VARIABLES Y VALORES POR DEFECTO
+var usuariosArray = [usuario2, usuario];
+localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
+sube('correcta', 5)
+}
+var tiempo = 10;
+var audio = document.getElementsByTagName("audio")
+
+//CÓDIGO PARA CREAR EL EFECTO SMOKE
+const filter = document.querySelector("#turbulence");
+let frames = 1;
+let rad = Math.PI / 180;
+let bfx, bfy;
+
+function freqAnimation() {
+    frames += .2;
+    bfx = 0.03;
+    bfy = 0.03;
+
+    bfx += 0.005 * Math.cos(frames * rad);
+    bfy += 0.005 * Math.sin(frames * rad);
+
+    bf = `${String(bfx)} ${String(bfy)}`;
+    filter.setAttributeNS(null, "baseFrequency", bf);
+
+    requestAnimationFrame(freqAnimation);
+}
+
+requestAnimationFrame(freqAnimation);
 
 //DA EFECTO CSS A LAS TRANSICIONES DE LA INTRO
-function efectosCSSIntro(){
+function efectosCSSIntro() {
+    console.log("Entra");
     document.getElementById("intro").classList.add('hint');
     var container = document.getElementById("container");
     var bienvenida = document.getElementById("bienvenida");
     container.appendChild(bienvenida);
-    // document.getElementById("spider-web-right").style.display="";
-    // document.getElementById("spider-web-left").style.display="";
-    setTimeout(function(){
-        document.getElementById("intro").style.display="none";
+    setTimeout(function () {
+        document.getElementById("intro").style.display = "none";
     }, 150);
-    setTimeout(function(){
-        bienvenida.style.display="block";
+    setTimeout(function () {
+        bienvenida.style.display = "block";
         bienvenida.classList.add('show');
     }, 200);
 }
 
+
+function cerrarEstadisticas(){
+    document.getElementById("container-statistics").innerHTML="";
+    document.getElementById("container-statistics").innerHTML='<h2 id="statictis-header">Your Statistics <span id="close" onclick="cerrarEstadisticas()">X</span></h2><canvas id="statistics-div"></canvas>'
+    document.getElementById("container-statistics").style.display = "none";
+}
+
+function statistics() {
+    var nombreUsuario = baja("usuarioActual");
+    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var encontrado = false;
+    var key = 0;
+    var labels = [];
+    var values = [];
+    while (!encontrado && key < usuarios.length) {
+        if (usuarios[key].nombreUsuario == nombreUsuario) {
+            for (let i in usuarios[key].partidas) {
+                values.push(usuarios[key].partidas[i]);
+            }
+            for (let i in usuarios[key].fechasPartidas) {
+                labels.push(usuarios[key].fechasPartidas[i]);
+            }
+            encontrado = true;
+        }
+        key++;
+    }
+    pintarGrafica(labels, values, "Score", "statistics-div");
+    document.getElementById("container-statistics").style.display = "block";
+    document.getElementById("container-statistics").classList.add('show');
+
+}
+
+//COMPRUEBA SI EL USUARIO YA ESTÁ REGISTRADO O NO 
+function existeUsuario(nombreUsuario) {
+    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var existe = false;
+    var key = 0;
+
+    while (!existe && key < usuarios.length) {
+        if (usuarios[key].nombreUsuario == nombreUsuario) {
+            existe = true;
+        }
+        key++
+    }
+    return existe
+}
+
+//AÑADE UN USUARIO CUANDO NO ESTÁ EN EL LOCALSTORAGE
+function addUsuario(nombreUsuario) {
+    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    var usuario = {
+        "nombreUsuario": nombreUsuario,
+        "partidas": [],
+        "fechasPartidas": []
+    }
+    usuarios.push(usuario);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+}
+
+function bienvenida(nombreUsuario){
+    var cabecera = document.getElementById("cabecera2-bienvenida");
+    if (!existeUsuario(nombreUsuario)) {
+        addUsuario(nombreUsuario);
+        var mensaje = `Bienvenid@, <span id="nombre">${nombreUsuario}</span>`;
+
+    } else {
+        var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
+        document.getElementById("navigation").style.display = "";
+    }
+    cabecera.innerHTML = mensaje;
+    localStorage.setItem("usuarioActual", nombreUsuario);
+}
+
+function registrarUsuario(nombreUsuario) {
+    inicializar();
+    if (nombreUsuario) {
+        efectosCSSIntro();
+        bienvenida(nombreUsuario);
+    } else {
+        var mensaje = document.createTextNode("El nombre de usuario no puede estar vacío");
+        var parrafo = document.getElementById("mensaje");
+        parrafo.appendChild(mensaje);
+        parrafo.style.display = "";
+    }
+}
+
+function jugarOtra(){
+    window.location = "home.html";
+}
+
+//SACA LAS PREGUNTAS DE LA API Y CAMBIA A question.html
 function jugar() {
     var pregunta = document.getElementById('categorias').value;
     fetch(pregunta)
@@ -37,12 +159,18 @@ function jugar() {
             window.location = "question.html";
         })
 }
+
+//FUNCION GENERAL QUE SUBE A LOCALSTORAGE
 function sube(clave, valor) {
     localStorage.setItem(clave, valor);
 }
+
+//FUNCION GENERAL QUE BAJA DE LOCALSTORAGE
 function baja(clave) {
     return localStorage.getItem(clave);
 }
+
+//CARGA LAS PREGUNTAS EN EL NAVEGADOR
 function cargaPreguntas(datos) {
     var pregunta, resCorrecta, resIncorrecta = [];
     for (let i = 0; i < 10; i++) {
@@ -56,33 +184,38 @@ function cargaPreguntas(datos) {
         sube(`resIncorrecta${i}`, JSON.stringify(resIncorrecta));
         sube('numPregunta', 0);
         sube('score', 0);
-        //Falta poner el nombre de usuario---
     }
 }
 
+//CREA MENSAJES
 function mensajes(mensaje) {
-    document.getElementById('mensajes').innerText = mensaje;
-    document.getElementById('mensajes').style.visibility = "visible";
+    var menDoc = document.getElementById('mensajes');
+    menDoc.innerText = mensaje;
+    menDoc.style.visibility = "visible";
     setTimeout(function () {
-        document.getElementById('mensajes').style.visibility = "hidden";
-    }, 3000);
+        menDoc.style.visibility = "hidden";
+    }, 1500);
 }
 
+//EFECTO DE LOS RAYOS
 function rayos() {
-    document.getElementById('thunder1').style.visibility = "visible";
-    document.getElementById('thunder2').style.visibility = "visible";
-    var thunder = document.getElementsByTagName("audio")[2];
-    thunder.play();
+    var thunder1 = document.getElementById('thunder1').style.visibility;
+    var thunder2 = document.getElementById('thunder2').style.visibility;
+    thunder1 = "visible";
+    thunder2 = "visible";
+    audio[2].play();
     setTimeout(function () {
-        document.getElementById('thunder1').style.visibility = "hidden";
-        document.getElementById('thunder2').style.visibility = "hidden";
+        thunder1 = "hidden";
+        thunder2 = "hidden";
     }, 3000);
 
 }
 
+//IMPRIME LAS PREGUNTAS Y RESPUESTAS
 function pintaPregunta(numPregunta) {
+    tiempo = 10;
     numPregunta = parseInt(numPregunta);
-    if (numPregunta <= 9 || numPregunta == 0) {
+    if (numPregunta <= 9) {
         var pregunta = baja(`Pregunta${(numPregunta)}`);
         var numMensaje = (numPregunta + 1);
         mensajes(`Pregunta ${(numMensaje)}`);
@@ -106,16 +239,38 @@ function pintaPregunta(numPregunta) {
         document.querySelectorAll('h3')[0].innerText = "Player: " + baja('usuarioActual');
         sube('numPregunta', (numPregunta + 1));
         sube('correcta', correcta);
+        reloj(10);
+        //EN CASO DE NO HABER MÁS PREGUNTAS ENLAZA A RESULTS.HTML
     } else {
         mensajes('¡Final!');
         rayos();
+        cargarPartida();
         setTimeout(function () {
             window.location = "results.html";
-        }, 7000);
+        }, 4000);
     }
 }
 
+//Cuenta atrás
+function reloj() {
+    document.getElementById('muerte').style.visibility = "visible";
+    tiempo--;
+    document.getElementById("reloj").innerHTML = String(tiempo);
+    if (tiempo > 0 && baja('correcta') < 5) {
+        setTimeout(reloj, 1000);
+        audio[4].play();
+    }
+    if (tiempo < 1 && baja('correcta') < 5) {
+        audio[3].play();
+        document.getElementById('muerte').style.visibility = "hidden";
+        comprobarRespuesta(5);
+    }
+};
+
+
+//COMPRUEBA LA RESPUESTA DEL USUARIO
 function comprobarRespuesta(respuesta) {
+
     var correcta = baja('correcta');
     if (correcta == parseInt(respuesta)) {
         let score = parseInt(baja('score'));
@@ -124,13 +279,14 @@ function comprobarRespuesta(respuesta) {
     } else {
         incorrecto(respuesta);
     }
+    sube('correcta', 5)
 }
 
+//EFECTOS DE ACIERTOS Y ENLACE A SIGUIENTE PREGUNTA
 function correcto(respuesta) {
     var id = `res${respuesta}`;
     document.getElementById(id).style.backgroundColor = "rgb(0, 131, 0)"
-    var risa = document.getElementsByTagName("audio")[0];
-    risa.play();
+    audio[0].play();
     mensajes('Terrorífico!!');
     setTimeout(function () {
         numPregunta = baja('numPregunta');
@@ -138,63 +294,116 @@ function correcto(respuesta) {
     }, 5000);
 }
 
+//EFECTOS DE ERROR Y ENLACE A SIGUIENTE PREGUNTA
 function incorrecto(respuesta) {
-    var id = `res${respuesta}`;
-    document.getElementById(id).style.backgroundColor = "#f50813";
-    var grito = document.getElementsByTagName("audio")[1];
-    grito.play();
+    if (respuesta < 5) {
+        var id = `res${respuesta}`;
+        document.getElementById(id).style.backgroundColor = "#f50813";
+    }
+    audio[1].play();
     mensajes('¡Uy! Qué miedito');
+    var correcta = baja('correcta');
+    var id = `res${correcta}`;
+    document.getElementById(id).style.backgroundColor = "white"
+    document.getElementById(id).style.color = "#636b82"
     setTimeout(function () {
         numPregunta = baja('numPregunta');
+        document.getElementById(id).style.backgroundColor = "#383E4E"
+        document.getElementById(id).style.color = "white"
         pintaPregunta(numPregunta);
     }, 5000);
 }
 
-//COMPRUEBA SI EL USUARIO YA ESTÁ REGISTRADO O NO 
-function existeUsuario(nombreUsuario){
+function results() {
+    document.querySelector('#mensajeFantasma p').innerHTML = "Score: " + baja('score');
+    setTimeout(function () {
+        document.getElementById('mensajeFantasma').style.visibility = "visible"
+    }, 3500);
+    setTimeout(function () {
+        document.getElementById('mensajeFantasma').style.visibility = "hidden"
+    }, 6000);
+    var usuarios = JSON.parse(baja('usuarios'));
+    var labels = [], valores = [];
+    for (key in usuarios) {
+        labels.push(usuarios[key].nombreUsuario);
+        let sum = usuarios[key].partidas.reduce((previous, current) => current += previous);
+        let avg = sum / usuarios[key].partidas.length;
+        valores.push(avg)
+    }
+
+    setTimeout(function () {
+        document.getElementById("stats").style.display="";
+        pintarGrafica(labels, valores, "Ranking",'myChart');
+        document.getElementById("jugar-otra").style.display="";
+    }, 9000);
+}
+
+function cargarPartida() {
     var usuarios = JSON.parse(localStorage.getItem("usuarios"));
-    var existe=false;
-    //¿HAY ALGUNA FORMA DE HACERLO SIN RECORRER TODO EL ARRAY DE USUARIOS? - QUIZAS CON UN WHILE, COMO SERÍA?
-    for (key in usuarios){
-        if (usuarios[key].nombreUsuario == nombreUsuario){
-            existe= true;
+    var date = new Date();
+    date = date.toISOString().split('T')[0];
+    for (key in usuarios) {
+        console.log(date);
+        if (usuarios[key].nombreUsuario == baja("usuarioActual")) {
+            usuarios[key].partidas.push(baja('score'));
+            usuarios[key].fechasPartidas.push(date);
+            localStorage.setItem("usuarios", JSON.stringify(usuarios));
         }
     }
-    return existe
 }
 
-//AÑADE UN USUARIO CUANDO NO ESTÁ EN EL LOCALSTORAGE
-function addUsuario(nombreUsuario){
-    var usuarios = JSON.parse(localStorage.getItem("usuarios"));
-    var usuario = {
-        "nombreUsuario" : nombreUsuario,
-        "partidas": {}
+
+function pintarGrafica (etiquetas, valores, titulo, id) {
+    var myChart
+      var data = {
+        labels: etiquetas,
+        datasets: [{
+            label: titulo,
+            backgroundColor: 'rgb(173, 193, 101)',
+            borderColor: '#fff',
+            color: '#fff',
+            data: valores,
+        }]
+
+      };
+    var options = {
+        scales: {
+          x: {
+            ticks: {
+              font: {
+                size: 10,
+              },
+              backgroundColor: "red", // not working
+              color: "white",　　// worked
+            },
+          },
+          y: {
+            min: 0,
+            max: 10,
+            ticks: {
+            //   stepSize: 2,
+              color: "white"
+            },
+          },
+        },
+      };
+    var config = {
+        type: 'bar',
+        data: data,
+        options: options
     }
-    usuarios.push(usuario);
-    localStorage.setItem("usuarios",JSON.stringify(usuarios));
+      var myChart = new Chart(
+        document.getElementById(id),
+        config
+    );
 }
 
-function registrarUsuario(){
-    var nombreUsuario = document.getElementById("nombreUsuario").value;
-    //var nombreUsuario ="emederos";
-    if(nombreUsuario) {
-        var cabecera = document.getElementById("cabecera2-bienvenida");
-        efectosCSSIntro();
-        if (!existeUsuario(nombreUsuario)){
-            addUsuario(nombreUsuario);
-            var mensaje = `Bienvenid@, <span id="nombre">${nombreUsuario}</span>`;
-            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png">, ${nombreUsuario}`;
 
-        }else{
-            var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
-            // var mensaje = `Bienvenid<img src="images/pumpkin_scalated60.png"> de nuevo, ${nombreUsuario}`;
-        }
-        cabecera.innerHTML=mensaje;
-        localStorage.setItem("usuarioActual", nombreUsuario);
-    }else{
-        var mensaje = document.createTextNode("El nombre de usuario no puede estar vacío");
-        var parrafo = document.getElementById("mensaje");
-        parrafo.appendChild(mensaje);
-        parrafo.style.display="";
-    }
-}
+
+
+
+
+
+
+
+

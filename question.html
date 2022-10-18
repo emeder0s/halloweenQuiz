@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="../images/favicon-96x96.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 </head>
 
 <body onload="pintaPregunta('0');">
@@ -19,7 +24,7 @@
         <h3>Player:</h3>
         <h3>Score: 0</h3>
     </header>
-    <h2>Halloween Quiz</h2>
+    <h2 id="cabecera-preguntas"><span class="smoke">Halloween</span> Quiz</h2>
     <img src="../images/pumpkin.png" class="img-pregunta">
     <div id="preguntas">
         <h4>Pregunta</h4>
@@ -28,7 +33,16 @@
         <button class="respuesta" id="res2" onclick="comprobarRespuesta('2')">respuesta 3</button>
         <button class="respuesta" id="res3" onclick="comprobarRespuesta('3')">respuesta 4</button>
     </div>
-    <img src="../images/spider-web.png" id="spider">
+    <div id="reloj">
+        <div>
+            <h1 id="relojText">10</h1>
+        </div>
+    </div>
+    <div>
+        <img id="muerte"src="../images/reaper.png">
+    </div>
+    
+    <img id="spider-web-left" src="../images/spider-web.png" id="spider">
     <img src="../images/thunder.png"  id="thunder1">
     <img src="../images/thunder.png"  id="thunder2">
     <audio>
@@ -43,9 +57,23 @@
         <source src="../sounds/thunder-sound.wav">
         </source>
     </audio>
+    <audio>
+        <source src="../sounds/TOYElec_Operation game 4 (ID 1685)_BSB.wav">
+        </source>
+    </audio>
+    <audio>
+        <source src="../sounds/heartbeat-6396.mp3">
+        </source>
+    </audio>
     <div id="mensajes">
         <h4>¡Final!</h4>
     </div>
+    <svg width="0">
+        <filter id="filter">
+          <feTurbulence id="turbulence" type="fractalNoise" baseFrequency=".03" numOctaves="20" />
+          <feDisplacementMap in="SourceGraphic" scale="30" />
+        </filter>
+      </svg>
     <script src="script.js"></script>
 </body>
 

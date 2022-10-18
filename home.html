@@ -13,12 +13,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav id="navigation" style="display:none"><h3 id="statistics" onclick="statistics()"><img src="images/statistics-30-b.png">Statistics</h3></nav>
     <div class="space70"></div>
+    <div id="container-statistics" class="container" style="display:none">
+        <h2 id="statictis-header">Your Statistics <span id="close" onclick="cerrarEstadisticas()">X</span></h2>
+        <canvas id="statistics-div"></canvas>
+    </div>
     <div id="container" class="container show">
         <div id="intro" class="flex-center-column">
             <h1><span class="smoke">Hall</span><img src="images/pumpkin_scalated.png"><span class="smoke">ween</span></h1>
@@ -29,7 +31,7 @@
                     <input id="nombreUsuario" type="text" required></input>
                     <p id="mensaje" style="display:none"></p>
                 </div>
-                <button id="empezar" onclick="registrarUsuario()">START</button>
+                <button id="empezar" onclick="registrarUsuario(document.getElementById('nombreUsuario').value)">START</button>
             </div>
             <p id="copyright-txt">Copyright &#169 2022 - Authors: Jorge Coronilla y Elena Mederos</p>
         </div>
@@ -40,7 +42,7 @@
                 <h3 id="cabecera3-bienvenida"> ¿A qué quieres jugar?</h3>
                 <select id="categorias">
                     <option value="https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple">Todas las categorías</option>
-                    <option value="https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple">Culturita General</option>
+                    <option value="https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple">Cultura General</option>
                     <option value="https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple">Películas</option>
                     <option value="https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple">Libros</option>
                     <option value="https://opentdb.com/api.php?amount=10&category=14&difficulty=easy&type=multiple">Televisión</option>
@@ -56,30 +58,8 @@
           <feTurbulence id="turbulence" type="fractalNoise" baseFrequency=".03" numOctaves="20" />
           <feDisplacementMap in="SourceGraphic" scale="30" />
         </filter>
-      </svg>
+    </svg>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
-    <script>
-        //CÓDIGO PARA CREAR EL EFECTO SMOKE
-        const filter = document.querySelector("#turbulence");
-        let frames = 1;
-        let rad = Math.PI / 180;
-        let bfx, bfy;
-
-        function freqAnimation() {
-            frames += .2;
-            bfx = 0.03;
-            bfy = 0.03;
-
-            bfx += 0.005 * Math.cos(frames * rad);
-            bfy += 0.005 * Math.sin(frames * rad);
-
-            bf = `${String(bfx)} ${String(bfy)}`;
-            filter.setAttributeNS(null, "baseFrequency", bf);
-
-            requestAnimationFrame(freqAnimation);
-        }
-
-        requestAnimationFrame(freqAnimation);
-    </script>
 </body>
 </html>
