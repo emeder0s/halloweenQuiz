@@ -356,6 +356,27 @@ header h3 {
     z-index: -1;
 }
 
+/*RELOJ*/
+#reloj {
+    color: rgb(173, 193, 101);
+    font-family: 'Creepster', cursive;
+    font-size: 50px;
+}
+
+
+#muerte {
+    position: relative;
+    width: 70px;
+    animation:  muerte 1s infinite;
+    visibility: hidden;
+}
+
+@keyframes muerte {
+    0%{width: 80px;}
+    50%{width:70px;}    
+}
+
+
 /*MENSAJES*/
 #mensajes {
     position: absolute;
@@ -419,6 +440,7 @@ header+h2 {
     margin: 0;
 }
 
+/*PÁGINA RESULTADOS*/
 #ghost2 {
     position: absolute;
     width: 160px;
@@ -473,20 +495,12 @@ header+h2 {
 #reloj {
     color: rgb(173, 193, 101);
     font-family: 'Creepster', cursive;
-    font-size: 50px;
+    font-size: 30px;
+    margin-bottom: 15px;
 }
-
-
-#muerte {
-    position: relative;
-    width: 70px;
-    animation:  muerte 1s infinite;
-    visibility: hidden;
-}
-
-@keyframes muerte {
-    0%{width: 80px;}
-    50%{width:70px;}    
+.spacer {
+    height: 240px;
+    width: 20px;
 }
 
 #stats {
