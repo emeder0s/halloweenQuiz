@@ -17,10 +17,9 @@ var usuario2 = {
 var usuariosArray = [usuario2, usuario];
 localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
 sube('correcta', 5)
+}
 var tiempo = 10;
 var audio = document.getElementsByTagName("audio")
-}
-
 
 //CÓDIGO PARA CREAR EL EFECTO SMOKE
 const filter = document.querySelector("#turbulence");
@@ -46,6 +45,7 @@ requestAnimationFrame(freqAnimation);
 
 //DA EFECTO CSS A LAS TRANSICIONES DE LA INTRO
 function efectosCSSIntro() {
+    console.log("Entra");
     document.getElementById("intro").classList.add('hint');
     var container = document.getElementById("container");
     var bienvenida = document.getElementById("bienvenida");
@@ -118,29 +118,35 @@ function addUsuario(nombreUsuario) {
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 }
 
-function registrarUsuario() {
-    inicializar();
-    var nombreUsuario = document.getElementById("nombreUsuario").value;
-    //var nombreUsuario ="emederos";
-    if (nombreUsuario) {
-        var cabecera = document.getElementById("cabecera2-bienvenida");
-        efectosCSSIntro();
-        if (!existeUsuario(nombreUsuario)) {
-            addUsuario(nombreUsuario);
-            var mensaje = `Bienvenid@, <span id="nombre">${nombreUsuario}</span>`;
+function bienvenida(nombreUsuario){
+    var cabecera = document.getElementById("cabecera2-bienvenida");
+    if (!existeUsuario(nombreUsuario)) {
+        addUsuario(nombreUsuario);
+        var mensaje = `Bienvenid@, <span id="nombre">${nombreUsuario}</span>`;
 
-        } else {
-            var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
-            document.getElementById("navigation").style.display = "";
-        }
-        cabecera.innerHTML = mensaje;
-        localStorage.setItem("usuarioActual", nombreUsuario);
+    } else {
+        var mensaje = `Bienvenid@ de nuevo, <span id="nombre">${nombreUsuario}</span>`;
+        document.getElementById("navigation").style.display = "";
+    }
+    cabecera.innerHTML = mensaje;
+    localStorage.setItem("usuarioActual", nombreUsuario);
+}
+
+function registrarUsuario(nombreUsuario) {
+    inicializar();
+    if (nombreUsuario) {
+        efectosCSSIntro();
+        bienvenida(nombreUsuario);
     } else {
         var mensaje = document.createTextNode("El nombre de usuario no puede estar vacío");
         var parrafo = document.getElementById("mensaje");
         parrafo.appendChild(mensaje);
         parrafo.style.display = "";
     }
+}
+
+function jugarOtra(){
+    window.location = "home.html";
 }
 
 //SACA LAS PREGUNTAS DE LA API Y CAMBIA A question.html
